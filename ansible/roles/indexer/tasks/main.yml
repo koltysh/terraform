@@ -1,0 +1,20 @@
+---
+  - name: copy splunk installation deb
+    copy: src={{ splunk_filename }} dest=/tmp
+
+  - name: install splunk with dpkg
+    command: dpkg -i {{ splunk_filename }} creates=/opt/splunk
+
+  - name: splunk license
+    command: /opt/splunk/bin/splunk start --accept-license
+    
+
+  - name: setup boot start
+    command: /opt/splunk/bin/splunk enable boot-start
+
+  - name: set up peer node
+    command: /opt/splunk/bin/splunk edit cluster-config -mode slave -master_uri https://{{ master_uri }}:8089 -replication_port 9887 -secret your_key -auth admin:changeme
+
+  - name: restart splunk
+    command: /opt/splunk/bin/splunk  restart
+

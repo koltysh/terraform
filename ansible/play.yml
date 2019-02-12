@@ -1,0 +1,20 @@
+---
+- hosts: tag_Name_Master   
+  become: yes
+  remote_user: ubuntu
+  roles:
+    - master
+    
+- hosts: tag_Name_Indexer
+  become: yes
+  remote_user: ubuntu
+  roles:
+    - indexer
+
+
+
+
+
+
+
+
